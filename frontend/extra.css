@@ -1,0 +1,22 @@
+.title td {
+        font-weight: bold;
+}
+
+.group-left td {
+    padding: 10px;
+    /*background-color: rgba(255, 255, 255, 0.3);*/
+  text-align: left;
+}
+
+.user_request {
+    background-color: rgba(128, 245, 142, 0.2);
+}
+
+.hash_logo {
+    background-image: url('https://icon-icons.com/icons2/800/PNG/512/_hashtag_icon-icons.com_65804.png');
+    min-height: 500px;
+    min-width: 500px;
+    position: absolute;
+    top: 10%;
+    vertical-align: middle;
+}
