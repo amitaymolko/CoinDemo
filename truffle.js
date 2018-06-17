@@ -1,4 +1,5 @@
 module.exports = {
+  migrations_directory: "./migrations",
   networks: {
     development: {
       host: "127.0.0.1",
@@ -6,7 +7,11 @@ module.exports = {
       gas: 4700000,
       network_id: "*" // Match any network id
     }
-  }
-  // See <http://truffleframework.com/docs/advanced/configuration>
-  // to customize your Truffle configuration!
+  },
+  solc: {
+    optimizer: {
+      enabled: true,
+      runs: 500
+    }
+  } 
 };

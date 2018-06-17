@@ -5,8 +5,9 @@ contract Coin {
     // readable from outside.
     address public minter;
     mapping (address => uint) public balances;
+    uint public totalSupply;
 
-    // Events allow light clients to react on
+    // Events allow light clients and oracles to react on
     // changes efficiently.
     event Sent(address from, address to, uint amount);
 
@@ -31,6 +32,7 @@ contract Coin {
     public 
     {
         balances[receiver] += amount;
+        totalSupply += amount;
     }
 
     function transferTo(address receiver, uint amount) 
