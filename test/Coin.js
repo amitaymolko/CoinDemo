@@ -11,6 +11,18 @@ contract('Coin', (accounts) => {
     // console.log('Contract', Contract.address)
   })
 
+  it('fails to mint when not minter', async () => {
+    try {
+      const tx = await Contract.mint(receiver, 10, { from: receiver, gas: 470000 })
+      console.log('tx', tx)
+      throw new Error('unauthorized tx')
+    } catch (err) {
+      if (!err.message.endsWith('revert')) {
+        throw err
+      }
+      return
+    }
+  })
 
   it('mints 10 coins', async () => {
     const initialBalance = await Contract.balances(minter)
@@ -20,6 +32,20 @@ contract('Coin', (accounts) => {
     const finalBalance = await Contract.balances(minter)
 
     assert.isTrue(finalBalance.toNumber() == initialBalance.toNumber() + 10)
+  })
+
+  it('fails to send more than balance', async () => {
+    try {
+      const initialMinterBalance = await Contract.balances(minter)
+      const tx = await Contract.transferTo(receiver, initialMinterBalance + 5, { from: minter, gas: 470000 })
+      console.log('tx', tx)
+      throw new Error('unauthorized tx')
+    } catch (err) {
+      if (!err.message.endsWith('revert')) {
+        throw err
+      }
+      return
+    }
   })
 
   it('sends 5 coins', async () => {
@@ -34,20 +60,6 @@ contract('Coin', (accounts) => {
     assert.isTrue(finalMinterBalance.toNumber() == initialMinterBalance.toNumber() - 5)
     assert.isTrue(finalReceiverBalance.toNumber() == initialReceiverBalance.toNumber() + 5)
   })
-
-  // it('fails to submit hashcrack with invalid hashtype', async () => {
-  //   try {
-  //     const value = web3.toWei(0.1, 'ether')
-  //     const tx = await Contract.requestHashCrack(0x19513FDC9DA4FB72A4A05EB66917548D3C90FF94D5419E1F2363EEA89DFEE1DD, "invalid_hash_type", "", { value })
-  //     console.log('tx', tx)
-  //     throw new Error('unauthorized tx')
-  //   } catch (err) {
-  //     if (!err.message.endsWith('revert')) {
-  //       throw err
-  //     }
-  //     return
-  //   }
-  // })
 
   // it('fails to submit hashcrack with invalid amount', async () => {
   //   try {
