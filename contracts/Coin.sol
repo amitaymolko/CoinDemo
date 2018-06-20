@@ -7,10 +7,6 @@ contract Coin {
     mapping (address => uint) public balances;
     uint public totalSupply;
 
-    // Events allow light clients and oracles to react on
-    // changes efficiently.
-    event Sent(address from, address to, uint amount);
-
     modifier onlyMinter() {
         require(msg.sender == minter);
         _;
@@ -41,6 +37,5 @@ contract Coin {
     {
         balances[msg.sender] -= amount;
         balances[receiver] += amount;
-        emit Sent(msg.sender, receiver, amount);
     }
 }
